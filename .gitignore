@@ -1,0 +1,14 @@
+data/
+models/
+*.pyc
+__pycache__/
+.venv/
+*.egg-info/
+dist/
+build/
+.env
+*.onnx
+logs/
+downloads/
+parser_output/
+.file_manifest.json
