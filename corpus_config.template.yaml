@@ -1,0 +1,94 @@
+# corpus_config.yaml — Configuration for your RAG pipeline
+#
+# Option 1: Generate automatically:  python analyze_corpus.py docs/
+# Option 2: Copy this template:      cp corpus_config.template.yaml corpus_config.yaml
+#
+# This file defines the domain structure of your document corpus.
+# The RAG pipeline reads this config to determine:
+# - What entities classify your documents (e.g., city, department, project)
+# - How to extract entity values from filenames, directories, or content
+# - What types of documents exist and their relative importance
+# - What filters to expose in search
+# - What sections to skip during chunking
+
+project:
+  name: "my-rag"                    # Short name (used in paths, MCP server name)
+  description: "My document corpus" # Human-readable description
+  language: "es"                    # Primary language: "es" | "en" | "auto"
+  table_name: "my_chunks"           # LanceDB table name (no spaces, lowercase)
+
+# --- Entities ---
+# Each entity becomes a chunk field and a search filter.
+# Entities are processed IN ORDER — mapping entities can reference earlier ones.
+#
+# extract_from options:
+#   "filename"  — regex on the filename stem (without extension)
+#   "directory" — the parent directory name
+#   "content"   — regex on the document content
+#   "mapping"   — derive from another entity via a lookup table
+entities: []
+  # Example: extract city from filename like "Boston_annual_2024.md"
+  # - name: "city"
+  #   description: "City name"
+  #   extract_from: "filename"
+  #   pattern: "^(.+?)_"
+  #
+  # Example: derive region from city
+  # - name: "region"
+  #   description: "Geographic region"
+  #   extract_from: "mapping"
+  #   mapping_source: "city"
+  #   mapping:
+  #     Boston: "northeast"
+  #     Miami: "southeast"
+  #     Chicago: "midwest"
+
+# --- Document Types ---
+# Each type points to a directory of markdown files.
+# precedence_boost: higher values rank higher when scores are close (1.0 = neutral).
+document_types: []
+  # Example:
+  # - name: "annual_report"
+  #   directory: "docs/annual"
+  #   precedence_boost: 1.20
+  #   deliverable_code: "AR"
+  #
+  # - name: "quarterly_update"
+  #   directory: "docs/quarterly"
+  #   precedence_boost: 1.00
+  #   deliverable_code: "QU"
+
+# --- Custom Fields ---
+# Additional metadata fields extracted per-document.
+# Same extract_from options as entities.
+custom_fields: []
+  # Example: extract year from filename
+  # - name: "year"
+  #   type: "string"
+  #   extract_from: "filename"
+  #   pattern: "_(20\\d{2})"
+
+# --- Filters ---
+# Which fields to expose as search filters.
+# content_type, has_quantitative_data, document_type, is_summary are always available.
+filters:
+  - document_type
+  - content_type
+
+# --- Skip Sections ---
+# Sections to skip during chunking (table of contents, disclaimers, etc.)
+skip_sections:
+  exact: ["TABLE OF CONTENTS", "CONTENIDO", "Tabla de Contenido"]
+  prefix: ["LIST OF ", "TABLAS DE "]
+
+# --- MCP Server ---
+# Instructions shown to LLMs consuming this RAG via MCP.
+# Available placeholders: {project_name}, {project_description},
+# {entity_names}, {entity_count}, {filter_list}, {document_types}
+mcp:
+  name: "my-rag"
+  instructions: |
+    RAG server for {project_description}.
+    Available filters: {filter_list}.
+    Use search() to find content.
+    Use list_entities() to discover valid entity values.
