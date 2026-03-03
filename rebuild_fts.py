@@ -14,8 +14,8 @@ from pathlib import Path
 
 import lancedb
 
-DB_PATH = os.environ.get("WCRP_DB_PATH", str(Path.home() / "wcrp-rag" / "data"))
-TABLE_NAME = "wcrp_chunks"
+DB_PATH = os.environ.get("CORPUS_DB_PATH", str(Path.home() / "core-rag" / "data"))
+TABLE_NAME = "corpus_chunks"
 
 
 def rebuild_fts():

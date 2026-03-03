@@ -59,7 +59,7 @@ class BatchProcessor:
 
     def __init__(
         self,
-        checkpoint_path: str = ".wcrp_checkpoint.json",
+        checkpoint_path: str = ".corpus_checkpoint.json",
         language: str = "spa",
         on_pdf_complete: Optional[Callable[[str, int], None]] = None,
         on_page_complete: Optional[Callable[[str, int, ProcessedPage], None]] = None,
@@ -67,7 +67,7 @@ class BatchProcessor:
         """Initialize the batch processor.
 
         Args:
-            checkpoint_path: Path to checkpoint file (default: .wcrp_checkpoint.json)
+            checkpoint_path: Path to checkpoint file (default: .corpus_checkpoint.json)
             language: Tesseract language code for OCR (default: 'spa' for Spanish)
             on_pdf_complete: Callback(pdf_path, page_count) called when a PDF finishes
             on_page_complete: Callback(pdf_path, page_num, page) called for each page

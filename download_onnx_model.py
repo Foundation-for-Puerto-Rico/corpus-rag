@@ -5,7 +5,7 @@ Downloads:
   - onnx/model.onnx (FP32, ~547 MB)
   - tokenizer.json, tokenizer_config.json, special_tokens_map.json
 
-Destination: ~/wcrp-rag/models/nomic-embed-text-v1.5/
+Destination: ~/core-rag/models/nomic-embed-text-v1.5/
 
 Usage:
     python download_onnx_model.py
@@ -16,7 +16,7 @@ from pathlib import Path
 from huggingface_hub import hf_hub_download
 
 REPO_ID = "nomic-ai/nomic-embed-text-v1.5"
-MODEL_DIR = Path.home() / "wcrp-rag" / "models" / "nomic-embed-text-v1.5"
+MODEL_DIR = Path.home() / "core-rag" / "models" / "nomic-embed-text-v1.5"
 
 FILES = [
     ("onnx/model.onnx", "model.onnx"),

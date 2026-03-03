@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Main script to process WCRP PDF documents.
+"""Main script to process corpus PDF documents.
 
 Processes all PDFs in a directory, extracting text, tables, and images,
 then generates Markdown and JSON output files.
@@ -262,7 +262,7 @@ def process_directory(
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Process WCRP PDF documents and generate Markdown/JSON output."
+        description="Process corpus PDF documents and generate Markdown/JSON output."
     )
     parser.add_argument(
         "input_dir",

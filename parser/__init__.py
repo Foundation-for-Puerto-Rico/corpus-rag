@@ -1,3 +1,3 @@
-"""WCRP Parser - PDF extraction for Whole Community Resilience Plans."""
+"""Corpus Parser - PDF extraction for document corpora."""
 
 __version__ = "0.1.0"

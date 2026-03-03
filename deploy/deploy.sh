@@ -161,7 +161,7 @@ Restart=always
 RestartSec=5
 
 Environment=CORPUS_DB_PATH=${REMOTE_DIR}/data
-Environment=WCRP_ONNX_MODEL_DIR=${REMOTE_DIR}/models/nomic-embed-text-v1.5
+Environment=CORPUS_ONNX_MODEL_DIR=${REMOTE_DIR}/models/nomic-embed-text-v1.5
 Environment=CORPUS_API_KEY=${CORPUS_API_KEY}
 Environment=CORPUS_PORT=8080
 Environment=GEMINI_API_KEY=${GEMINI_API_KEY:-}
